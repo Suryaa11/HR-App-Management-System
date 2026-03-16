@@ -17,7 +17,8 @@ spec:
       maxSurge: 25%
   template:
     metadata:
-      app: hr-temp-label
+      labels:
+        app: hr-temp-label
     spec:
       containers:
         - name: hr-app-cont
