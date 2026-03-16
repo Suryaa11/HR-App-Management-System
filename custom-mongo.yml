@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  namespace: surya-ns
+  label:
+    app: mongodb-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-temp-label
+  template:
+    metadata:
+      app: mongodb-temp-label
+    spec:
+      containers:
+        - name: mongodb-cont
+          image: mongo:7.0
+          ports:
+            - containerPort: 27017
+          envFrom:
+            - configMapRef:
+                name: hr-config
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  namespace: surya-ns
+spec:
+  selector:
+    app: mongodb-temp-label
+  ports:
+  - port: 27017
+    targetPort: 27017
+  type: NodePort
+  

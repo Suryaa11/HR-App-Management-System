@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: hr-app-deploy
+  namespace: surya-ns
+  labels:
+    app: hr-app-label
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hr-temp-label
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  template:
+    metadata:
+      app: hr-temp-label
+    spec:
+      containers:
+        - name: hr-app-cont
+          image: rishabhmishra01/hr-app-management-system-main-app:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: hr-config
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: hr-service
+  namespace: surya-ns
+spec:
+  selector:
+    app: hr-temp-label
+  ports:
+    - port: 3000
+      targetPort: 3000
+  type: NodePort

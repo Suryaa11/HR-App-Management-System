@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hr-config
+data:
+  NODE_ENV: production
+  PORT: "3000"
+  DB_NAME: hr_system
+  LOG_LEVEL: info
+  MONGO_URI: mongodb://rootuser:rootpassword@localhost:27017/hr_system?authSource=rootuser
+  MONGO_USERNAME: rootuser
+  MONGO_PASSWORD: rootpassword
+  DEFAULT_ADMIN_ID: project
+  DEFAULT_ADMIN_PASSWORD: project123
