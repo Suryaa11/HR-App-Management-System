@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: mongodb
   namespace: surya-ns
-  label:
+  labels:
     app: mongodb-label
 spec:
   replicas: 1
@@ -12,7 +12,8 @@ spec:
       app: mongodb-temp-label
   template:
     metadata:
-      app: mongodb-temp-label
+      labels:
+        app: mongodb-temp-label
     spec:
       containers:
         - name: mongodb-cont
